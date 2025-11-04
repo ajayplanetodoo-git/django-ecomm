@@ -16,8 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path , include
+from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', include('ecomm_core.urls')),
+    path('admin/', admin.site.urls),
+    path('home/', views.home_pg , name='home'),
+    path('about/', views.about_pg , name='about'),
+    path('contact/', views.contact_pg , name='contact'),
+    path('login/', views.login_pg , name='login'),
+    path('regist/', views.register_pg , name='register'),
 ]
