@@ -1,7 +1,7 @@
 from django.shortcuts import render , redirect
 from django.http import HttpResponse, request
 from .forms import ContactForm , LoginForm , RegisterForm
-from django.contrib.auth import authenticate , login, logout
+from django.contrib.auth import authenticate , login, logout , get_user_model
 def home_pg(request):
     contxt = {
         'msg':'i have to make fully functional base ecormer-project',
@@ -50,11 +50,17 @@ def login_pg(request):
             print("error")
     return render(request, "auth/login.html", contxt)
 
+User= get_user_model()
 def register_pg(request):
     registerform = RegisterForm(request.POST or None)
     contxt = {
         "forms":registerform
     }
-    if registerform.is_valid:
+    if registerform.is_valid():
         print(registerform.cleaned_data)
+        username = registerform.cleaned_data.get(("username")) #geting username from  registerform class
+        email = registerform.cleaned_data.get(("email")) #geting username from  registerform class
+        password = registerform.cleaned_data.get(("password")) #geting username from  registerform class
+        new_user = User.objects.create_user(username,email,password)  # createing new user using get_user_model
+        print(new_user)
     return render(request, "auth/register.html", contxt)

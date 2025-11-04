@@ -1,5 +1,5 @@
 from django import forms
-
+from django.contrib.auth import get_user_model
 class ContactForm(forms.Form):
 
     fullname =  forms.CharField(widget=forms.TextInput(
@@ -34,6 +34,23 @@ class RegisterForm(forms.Form):
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput)
     password2 = forms.CharField(label="Confirm Password",widget=forms.PasswordInput)
+
+    def clean_username(self): # in this function we are validating suername if it already exixt using get_user_model
+        User = get_user_model()
+        username = self.cleaned_data.get("username")
+        qs = User.objects.filter(username=username) # here filter data
+        if qs.exists():
+            raise forms.ValidationError("Username is already taken")
+        return username
+
+    def clean_email(self):
+         User = get_user_model()
+         email = self.cleaned_data.get("email")
+         qs = User.objects.filter(email=email)
+         if qs.exists():
+             raise forms.ValidationError("Email email is already exist")
+         return email
+
 
     def clean(self):
         data = self.cleaned_data
