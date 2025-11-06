@@ -30,25 +30,6 @@ def contact_pg(request):
          print(request.POST.get("email"))
      return render(request , 'contact/contact_views.html', contxt)
 
-def login_pg(request):
-    loginform = LoginForm( request.POST or None)
-    contxt = {
-        "forms":loginform
-    }
-    print(request.user.is_authenticated)
-    if loginform.is_valid():   
-        username = loginform.cleaned_data.get("username") # using clean_data from django forms is for the  validation,safty , type conversion
-        password = loginform.cleaned_data.get("password") # if we use request.post.get("") it only for raw input it not do other thing like forms
-        print("user input password and usename",loginform.cleaned_data)
-        user = authenticate(request, username=username, password=password )
-        
-        if user is not None:
-            login(request, user)
-            # contxt['forms'] = LoginForm()
-            return redirect("/login")
-        else:
-            print("error")
-    return render(request, "auth/login.html", contxt)
 
 User= get_user_model()
 def register_pg(request):
@@ -64,3 +45,26 @@ def register_pg(request):
         new_user = User.objects.create_user(username,email,password)  # createing new user using get_user_model
         print(new_user)
     return render(request, "auth/register.html", contxt)
+
+
+def login_pg(request):
+    loginform = LoginForm(request.POST or None)
+    contxt = {
+        "forms": loginform
+    }
+    print(request.user.is_authenticated)
+    if loginform.is_valid():
+        username = loginform.cleaned_data.get(
+            "username")  # using clean_data from django forms is for the  validation,safty , type conversion
+        password = loginform.cleaned_data.get(
+            "password")  # if we use request.post.get("") it only for raw input it not do other thing like forms above
+        print("user input password and usename", loginform.cleaned_data)
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            # contxt['forms'] = LoginForm()
+            return redirect("/login")
+        else:
+            print("error")
+    return render(request, "auth/login.html", contxt)

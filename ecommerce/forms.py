@@ -22,13 +22,13 @@ class ContactForm(forms.Form):
             raise forms.ValidationError("Email contains gamil.com")
         return email
 
-class LoginForm(forms.Form):
-    username = forms.CharField(widget=forms.TextInput(
-                                attrs={ "class":"form-control",
-                                       "placeholder":"Username" }))
-    password = forms.CharField(widget=forms.PasswordInput)
 
+"""
+this is  user regristarion form take input  from user pass there data through validation check suding (clean_data.get(""))
+method    
+feature : validate if user alraedy exists   (username ,email, password and cnf_pasword match)
 
+"""
 class RegisterForm(forms.Form):
     username = forms.CharField()
     email = forms.EmailField()
@@ -61,3 +61,12 @@ class RegisterForm(forms.Form):
             raise forms.ValidationError("password is not match")
         
         return data
+
+'''
+after registartion user will login 
+'''
+class LoginForm(forms.Form):
+    username = forms.CharField(widget=forms.TextInput(
+        attrs={"class": "form-control",
+               "placeholder": "Username"}))
+    password = forms.CharField(widget=forms.PasswordInput)
