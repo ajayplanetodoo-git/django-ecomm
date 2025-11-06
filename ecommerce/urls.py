@@ -19,6 +19,7 @@ from django.urls import path , include
 from django.conf import settings
 from django.conf.urls.static import static
 from . import views
+from product_app import views as p_view
 
 urlpatterns = [
     path('', include('ecomm_core.urls')),
@@ -28,6 +29,10 @@ urlpatterns = [
     path('contact/', views.contact_pg , name='contact'),
     path('login/', views.login_pg , name='login'),
     path('regist/', views.register_pg , name='register'),
+    path('plistview/', p_view.product_list_view , name='productlistview'),
+    # path('plistviewcvb/', p_view.ProductListView.as_view() , name='classbaseproductlistview'),
+
+
 ]
 
 if settings.DEBUG:
