@@ -1,7 +1,6 @@
 
- <!-- {{ object_list }} -->
-
  {% for rec in object_list %}
-    {{rec.title}}<br>
-
+    {{ rec.title }}<br>
+    {{rec.description}}<br>
+    {{rec.image}}
  {% endfor %}

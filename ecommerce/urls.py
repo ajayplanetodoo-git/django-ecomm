@@ -18,20 +18,21 @@ from django.contrib import admin
 from django.urls import path , include
 from django.conf import settings
 from django.conf.urls.static import static
-from . import views
+from . import views as main_view
 from product_app import views as p_view
 
 urlpatterns = [
     path('', include('ecomm_core.urls')),
     path('admin/', admin.site.urls),
-    path('home/', views.home_pg , name='home'),
-    path('about/', views.about_pg , name='about'),
-    path('contact/', views.contact_pg , name='contact'),
-    path('login/', views.login_pg , name='login'),
-    path('regist/', views.register_pg , name='register'),
-    path('plistview/', p_view.product_list_view , name='productlistview'),
-    # path('plistviewcvb/', p_view.ProductListView.as_view() , name='classbaseproductlistview'),
-
+    path('home/', main_view.home_pg , name='home'),
+    path('about/', main_view.about_pg , name='about'),
+    path('contact/', main_view.contact_pg , name='contact'),
+    path('login/', main_view.login_pg , name='login'),
+    path('regist/', main_view.register_pg , name='register'),
+    path('plistviewfvb/', p_view.product_list_view , name='productlistview'),
+    path('plistviewcvb/', p_view.ProductListView.as_view() , name='classbaseproductlistview'),
+    path('pdetailviewfvb/<int:id>/',p_view.product_detail_view, name='productdetailview'),
+    path('pdetailviewcvb/<int:id>/', p_view.ProductDetailView.as_view(), name='classbaseproductdetailview'),
 
 ]
 
